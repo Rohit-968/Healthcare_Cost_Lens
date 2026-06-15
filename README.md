@@ -23,6 +23,10 @@ Ingests 6.8 GB of public CMS Medicare data across a 3-node Hadoop cluster and ru
 | Q5 — Specialty volume | Which specialties dominate total Medicare spend? |
 
 ---
+<img width="883" height="540" alt="image 1" src="https://github.com/user-attachments/assets/c1801046-4dcb-4628-9a9b-925ee181a42d" />
+<img width="887" height="602" alt="image 2" src="https://github.com/user-attachments/assets/3c909426-1ca4-4647-8c3a-169eeab37373" />
+
+
 
 ## Results
 
