@@ -1,0 +1,37 @@
+Phase 1 - Infra setup
+
+cd ~/healthcost-lens
+docker-compose up -d
+
+docker ps  # Check for 8 healthy containers
+docker exec namenode hdfs dfsadmin -report # Check HDFS storage
+
+Phase 2 - Data Ingestion
+
+docker exec namenode hdfs dfs -mkdir -p /medicare/raw /medicare/processed /medicare/results
+docker exec namenode hdfs dfs -put /path/to/cms_data_*.csv /medicare/raw/
+
+Phase 3 - ETL Pipeline
+
+docker cp ~/healthcost-lens/scripts/etl_pipeline.py spark-master:/tmp/
+docker exec -it spark-master /spark/bin/spark-submit \
+  --master spark://spark-master:7077 \
+  /tmp/etl_pipeline.py
+  
+Phase 4 - Analytical Layer
+
+docker cp ~/healthcost-lens/hive_queries.py spark-master:/tmp/
+docker exec -it spark-master /spark/bin/spark-submit \
+  --master spark://spark-master:7077 \
+  --conf spark.pyspark.python=python3 \
+  /tmp/hive_queries.py
+  
+docker exec namenode hdfs dfs -get /medicare/results/* /tmp/
+docker cp namenode:/tmp/ ~/healthcost-lens/final_output/hive_results/
+
+Phase 5 - ML and Visualization
+
+docker exec -it spark-master /spark/bin/spark-submit /tmp/kmeans.py
+docker exec -it spark-master /spark/bin/spark-submit /tmp/random_forest_model.py
+python3 ~/healthcost-lens/scripts/plot_results.py
+streamlit run dashboard.py
