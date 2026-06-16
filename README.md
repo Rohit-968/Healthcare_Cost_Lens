@@ -48,7 +48,7 @@ CMS Medicare CSV (6.8 GB · 9,886,177 rows)
         ▼
 ┌───────────────────────────────┐
 │   HDFS Ingestion              │  ← 3-node Hadoop cluster (1 NameNode + 2 DataNodes)
-│   54 blocks · replication 2  │    YARN resource management · zero corrupt blocks
+│   54 blocks · replication 2   │    YARN resource management · zero corrupt blocks
 └──────────────┬────────────────┘
                │
                ▼
@@ -61,9 +61,9 @@ CMS Medicare CSV (6.8 GB · 9,886,177 rows)
         ▼             ▼
 ┌──────────────┐  ┌──────────────────┐
 │  SparkSQL    │  │  Spark MLlib     │
-│  Q1 – Q5    │  │  K-Means · RF    │
+│  Q1 – Q5     │  │  K-Means · RF    │
 └──────┬───────┘  └───────┬──────────┘
-        └──────┬───────────┘
+        └──────┬──────────┘
                ▼
 ┌───────────────────────────────┐
 │   Streamlit Dashboard         │  ← 5-page interactive app · Plotly Express
